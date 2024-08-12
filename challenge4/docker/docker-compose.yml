@@ -5,28 +5,29 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - node-service
+      - app-service
 
-  node-service:
+  app-service:
     build: ./api
     environment:
-      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
+      - DB_ROOT_PASS=${DB_ROOT_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_SERVER=${DB_SERVER}
     deploy:
       replicas: 3
     depends_on:
-      - db
+      - db-service
 
-  db:
+  db-service:
     build: ./db
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASS=${MYSQL_ROOT_PASS}
+      - MYSQL_DB=${MYSQL_DB}
       - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_PASS=${MYSQL_PASS}
+      - MYSQL_HOST=${MYSQL_HOST}
     ports:
       - "3306:3306"
     volumes:
